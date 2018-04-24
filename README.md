@@ -2,6 +2,8 @@
 
 ##集成方式
 
+最新版本参见`Release`
+
 1. Gradle
 ```
     // root build.gradle
