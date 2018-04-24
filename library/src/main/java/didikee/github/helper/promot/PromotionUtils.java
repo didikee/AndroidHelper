@@ -7,9 +7,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.widget.Toast;
 
-import didikee.me.android.helper.LanguageHelper;
-import didikee.me.android.utils.ClipboardUtil;
-import didikee.me.android.utils.NetworkStateUtil;
+import didikee.github.helper.helper.LanguageHelper;
+import didikee.github.helper.utils.ClipboardUtil;
+import didikee.github.helper.utils.NetworkStateUtil;
+
 
 /**
  * Created by didikee on 2018/2/7.
