@@ -13,7 +13,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import didikee.me.android.utils.IntentUtil;
+import didikee.github.helper.utils.IntentUtil;
+
 
 /**
  * Created by didikee on 07/07/2017.

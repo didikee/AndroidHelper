@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import didikee.me.android.fix.UriFixUtil;
+import didikee.github.helper.file.UriFixUtil;
+
 
 /**
  * Created by didikee on 27/06/2017.

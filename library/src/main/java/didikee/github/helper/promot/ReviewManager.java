@@ -2,7 +2,8 @@ package didikee.github.helper.promot;
 
 import android.content.Context;
 
-import didikee.me.android.utils.SPUtil;
+import didikee.github.helper.utils.SPUtil;
+
 
 /**
  * Created by didikee on 2018/3/4.
