@@ -58,7 +58,7 @@ public class PackageUtil {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        if (applicationInfo == null) return "";
+        if (applicationInfo == null || applicationInfo.metaData == null) return "";
         return applicationInfo.metaData.getString(placeHolder);
     }
 
@@ -69,7 +69,7 @@ public class PackageUtil {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        if (activityInfo == null) return "";
+        if (activityInfo == null || activityInfo.metaData == null) return "";
         return activityInfo.metaData.getString(placeHolder);
     }
 
