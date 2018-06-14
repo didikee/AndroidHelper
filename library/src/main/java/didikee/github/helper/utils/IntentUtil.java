@@ -24,6 +24,8 @@ import didikee.github.helper.file.UriFixUtil;
 
 public class IntentUtil {
     private static final String TAG = IntentUtil.class.getSimpleName();
+    public static final String TYPE_VIDEO = "video/*";
+    public static final String TYPE_VIDEO_MP4 = "video/mp4";
 
     public static Intent getAppRateIntent(String packageName) {
         Uri uri = Uri.parse("market://details?id=" + packageName);
@@ -156,6 +158,37 @@ public class IntentUtil {
             Toast.makeText(activity, "Oops,File not found!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    public static void shareVideo(Activity activity, File videoFile) {
+        Intent allIntent = new Intent();
+        allIntent.setAction(Intent.ACTION_SEND);
+        allIntent.setType(TYPE_VIDEO);
+        Uri uri = UriFixUtil.getUriFrom(activity.getApplicationContext(), videoFile);
+        allIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        activity.startActivity(Intent.createChooser(allIntent, "Share to"));
+    }
+
+    /**
+     * 调用系统的播放器来播放视频
+     * @param activity
+     * @param videoFile
+     */
+    public static void playVideo(Activity activity, File videoFile) {
+        if (videoFile != null && videoFile.exists()) {
+            // TODO 调用系统的播放器
+            Uri uri = UriFixUtil.getUriFrom(activity, videoFile);
+            Intent videoIntent = new Intent(Intent.ACTION_VIEW);
+            videoIntent.setDataAndType(uri, "video/*");
+            videoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            try {
+                activity.startActivity(videoIntent);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(activity, "糟糕! 播放 " + videoFile.getName() + "出现了问题", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }
