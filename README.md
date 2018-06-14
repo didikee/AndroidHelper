@@ -35,3 +35,11 @@
 	    <version>v0.0.1</version>
 	</dependency>
 ```
+
+## 兼容Android新的文件系统，配置 path_authorities
+
+建议 path_authorities 设置为ApplicationID
+```
+<string name="path_authorities"> </string>
+```
+

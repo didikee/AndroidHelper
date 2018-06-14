@@ -1,4 +1,4 @@
-package didikee.github.helper.utils;
+package didikee.github.helper.file;
 
 import java.io.File;
 import java.io.FileInputStream;

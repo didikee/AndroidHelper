@@ -1,4 +1,4 @@
-package didikee.github.helper.utils;
+package didikee.github.helper.uikit;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;

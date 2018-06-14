@@ -1,4 +1,4 @@
-package didikee.github.helper.utils;
+package didikee.github.helper.file;
 
 import android.content.Context;
 import android.graphics.Bitmap;

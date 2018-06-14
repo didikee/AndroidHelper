@@ -1,4 +1,4 @@
-package didikee.github.helper.helper;
+package didikee.github.helper.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

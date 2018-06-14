@@ -2,6 +2,8 @@ package didikee.github.helper.utils;
 
 import java.text.DecimalFormat;
 
+import didikee.github.helper.file.FileUtil;
+
 /**
  * Created by didikee on 21/06/2017.
  * {@link FileUtil#formatSize(long)}

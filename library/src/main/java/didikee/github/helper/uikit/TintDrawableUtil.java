@@ -1,4 +1,4 @@
-package didikee.github.helper.utils;
+package didikee.github.helper.uikit;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;

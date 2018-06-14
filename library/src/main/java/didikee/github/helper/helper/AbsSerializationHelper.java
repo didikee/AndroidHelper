@@ -10,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
+import didikee.github.helper.file.SerializationUtil;
+
 /**
  * Created by didikee on 23/05/2017.
  */

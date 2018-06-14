@@ -1,4 +1,4 @@
-package didikee.github.helper.utils;
+package didikee.github.helper.file;
 
 import java.io.File;
 import java.text.Collator;
@@ -8,7 +8,7 @@ import java.util.Comparator;
  * Created by didikee on 21/06/2017.
  */
 
-public class FileSorter implements Comparator<File> {
+public class FileSorter2 implements Comparator<String> {
     /**默认排序的方式， 按目录，文件排序TYPE_DIR*/
     public static final int TYPE_DEFAULT = -1;
     /**按修改时间，降序*/
@@ -21,12 +21,14 @@ public class FileSorter implements Comparator<File> {
     public static final int TYPE_SIZE_UP = 4;
     /**按文件名*/
     public static final int TYPE_NAME = 5;
+
+    public static final int TYPE_NAME_DOWN = 6;
     /**按目录，文件排序*/
     public static final int TYPE_DIR = 7;
 
     private int mType = -1;
 
-    public FileSorter(int type) {
+    public FileSorter2(int type) {
         if (type < 0 || type > 7) {
             type = TYPE_DIR;
         }
@@ -34,8 +36,9 @@ public class FileSorter implements Comparator<File> {
     }
 
     @Override
-    public int compare(File object1, File object2) {
-
+    public int compare(String file1, String file2) {
+        File object1 = new File(file1);
+        File object2 = new File(file2);
         int result = 0;
 
         switch (mType) {
@@ -58,6 +61,10 @@ public class FileSorter implements Comparator<File> {
 
             case TYPE_NAME:            //name
                 result = compareByName(object1, object2);
+                break;
+
+            case TYPE_NAME_DOWN:       //name down
+                result = compareByNameDown(object1, object2);
                 break;
 
             case TYPE_DIR:            //dir or file
@@ -142,6 +149,13 @@ public class FileSorter implements Comparator<File> {
         Comparator<Object> cmp = Collator.getInstance(java.util.Locale.CHINA);
 
         return cmp.compare(object1.getName(), object2.getName());
+    }
+
+    private int compareByNameDown(File object1, File object2) {
+
+        Comparator<Object> cmp = Collator.getInstance(java.util.Locale.CHINA);
+
+        return cmp.compare(object2.getName(), object1.getName());
     }
 
     private int compareByDir(File object1, File object2) {
