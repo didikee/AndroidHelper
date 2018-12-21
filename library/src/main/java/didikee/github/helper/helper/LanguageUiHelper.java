@@ -18,7 +18,7 @@ import didikee.github.helper.bean.LanguageItem;
 public class LanguageUiHelper {
     private static final String TAG = "LanguageUiHelper";
 
-    public static void showChangeLanguageDialog(final Activity activity, final LanguageItem[] languageItems) {
+    public static void showChangeLanguageDialog(final Activity activity, final LanguageItem[] languageItems, String title) {
         if (languageItems == null || languageItems.length <= 0 || activity == null || activity.isFinishing()) {
             Log.d(TAG, "Do nothing: activity has finished!");
             return;
@@ -61,7 +61,7 @@ public class LanguageUiHelper {
 
         final int finalCurrentIndex = currentIndex;
         new AlertDialog.Builder(activity)
-                .setTitle("标题")
+                .setTitle(title)
                 .setSingleChoiceItems(titles, currentIndex, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -70,14 +70,16 @@ public class LanguageUiHelper {
                             return;
                         }
                         Locale selectedLocale = languageItems[which].locale;
+                        String language = "";
+                        String country = "";
                         if (selectedLocale == null) {
                             LanguageHelper.setSPLanguage(activity, "", "");
                         } else {
-                            String language = selectedLocale.getLanguage();
-                            String country = selectedLocale.getCountry();
+                            language = selectedLocale.getLanguage();
+                            country = selectedLocale.getCountry();
                             LanguageHelper.setSPLanguage(activity, language, country);
-                            LanguageHelper.changeAppLanguage(activity, language, country);
                         }
+                        LanguageHelper.changeAppLanguage(activity, language, country);
                         activity.recreate();
                     }
                 })

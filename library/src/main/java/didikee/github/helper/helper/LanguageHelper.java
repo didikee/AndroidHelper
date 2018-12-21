@@ -48,70 +48,46 @@ public final class LanguageHelper {
         SPUtil.put(context, SP_COUNTRY_CODE, TextUtils.isEmpty(countryCode) ? "" : countryCode);
     }
 
-    public static boolean setLanguage(@NonNull Context context, String languageCode) {
-        if (TextUtils.isEmpty(languageCode)) {
-            // do nothing
-            // 这会直接使用系统的语言设置
-            // 默认是用这个
-            return false;
-        }
+    /**
+     * 设置语言
+     * @param context
+     * @param languageCode
+     * @param countryCode
+     * @return
+     */
+    public static void setLanguage(@NonNull Context context, String languageCode, String countryCode) {
+        Resources resources = context.getResources();
+        Configuration config = resources.getConfiguration();
+        Locale locale = createLocale(languageCode, countryCode);
         if (Build.VERSION.SDK_INT >= 17) {
-            Locale locale = createLocale(languageCode);
             Locale.setDefault(locale);
-            Configuration config = context.getResources().getConfiguration();
             config.setLocale(locale);
             context.createConfigurationContext(config);
         } else {
-            //获取当前资源对象
-            Resources resources = context.getResources();
-            //获取设置对象
-            Configuration configuration = resources.getConfiguration();
-            configuration.locale = createLocale(languageCode);
+            config.locale = locale;
             //设置本地语言
-            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-
-//            Locale locale = getTargetLanguage(languageCode);
-////            Locale locale = new Locale(language);
-//            Locale.setDefault(locale);
-//
-//            Resources resources = context.getResources();
-//
-//            Configuration configuration = resources.getConfiguration();
-//            configuration.locale = locale;
-//
-//            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-
+            resources.updateConfiguration(config, resources.getDisplayMetrics());
         }
-        return true;
-
-
-//        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-
-        //发送结束所有activity的广播
-//        Intent intent = new Intent(BaseActivity.ACTION_FINISH_ACTIVITY);
-//        sendBroadcast(intent);
-//        startActivity(new Intent(this, MainActivity.class));
     }
 
-    @SuppressWarnings("deprecation")
     public static void changeAppLanguage(Context context, String newLanguageCode, String newCountryCode) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-
         // app locale
         Locale locale = createLocale(newLanguageCode, newCountryCode);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//            Locale.setDefault(locale);
             configuration.setLocale(locale);
         } else {
             configuration.locale = locale;
         }
-
         // updateConfiguration
         DisplayMetrics dm = resources.getDisplayMetrics();
         resources.updateConfiguration(configuration, dm);
     }
 
+    @Deprecated
     public static Locale createLocale(@Nullable String languageCode) {
         return createLocale(languageCode, "");
     }
