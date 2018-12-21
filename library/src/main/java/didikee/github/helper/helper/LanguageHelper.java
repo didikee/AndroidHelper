@@ -43,7 +43,7 @@ public final class LanguageHelper {
         return (String) SPUtil.get(context, SP_COUNTRY_CODE, "");
     }
 
-    public static void setSPLanguage(@NonNull Context context, String languageCode,String countryCode) {
+    public static void setSPLanguage(@NonNull Context context, String languageCode, String countryCode) {
         SPUtil.put(context, SP_LANGUAGE_CODE, TextUtils.isEmpty(languageCode) ? "" : languageCode);
         SPUtil.put(context, SP_COUNTRY_CODE, TextUtils.isEmpty(countryCode) ? "" : countryCode);
     }
@@ -94,12 +94,12 @@ public final class LanguageHelper {
     }
 
     @SuppressWarnings("deprecation")
-    public static void changeAppLanguage(Context context, String newLanguageCode,String newCountryCode) {
+    public static void changeAppLanguage(Context context, String newLanguageCode, String newCountryCode) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
 
         // app locale
-        Locale locale = createLocale(newLanguageCode);
+        Locale locale = createLocale(newLanguageCode, newCountryCode);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             configuration.setLocale(locale);
@@ -125,83 +125,45 @@ public final class LanguageHelper {
      */
     public static Locale createLocale(@Nullable String languageCode, @Nullable String countryCode) {
         if (TextUtils.isEmpty(languageCode)) {
-            return Locale.getDefault();
+            return getSystemDefaultLanguage();
         }
         return new Locale(languageCode, countryCode);
     }
 
-
-//    public static Locale getTargetLanguage(String languageCode) {
-//        Locale locale;
-//        switch (languageCode) {
-//            case ZH:
-//                // 简体中文
-//                locale = Locale.SIMPLIFIED_CHINESE;
-//                break;
-//            case ZH_TW:
-//                // 简体中文
-//                locale = Locale.TAIWAN;
-//                break;
-//            case EN:
-//                // 英语
-//                locale = Locale.ENGLISH;
-//                break;
-//            case JA:
-//                // 日语
-//                locale = Locale.JAPAN;
-//                break;
-//            case "fr":
-//                // 法语
-//                locale = Locale.FRANCE;
-//                break;
-//            case ES:
-//                // 西班牙语
-//                locale = new Locale("es");
-//                break;
-//            case "ko":
-//                //韩国
-//                locale = new Locale("ko");
-//                break;
-//            case "it":
-//                //意大利
-//                locale = new Locale("it");
-//                break;
-//            case PT:
-//                //葡萄牙
-//                locale = new Locale("pt");
-//                break;
-//            case DE:
-//                //德国
-//                locale = Locale.GERMAN;
-//                break;
-//            case AR:
-//                //阿拉伯
-//                locale = new Locale("ar");
-//                break;
-//            case RU:
-//                //俄语
-//                locale = new Locale("ru");
-//                break;
-//            default:
-//                // 默认是系统
-//                locale = Locale.getDefault();
-//                break;
-//        }
-//        return locale;
-//    }
-
-    public static Context attachBaseContext(Context context, String languageCode) {
+    /**
+     * 改变
+     * @param context
+     * @param languageCode
+     * @return
+     */
+    @Deprecated
+    public static Context attachBaseContext(Context context, String languageCode, String countryCode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResources(context, languageCode);
+            return updateResources(context, languageCode, countryCode);
+        } else {
+            return context;
+        }
+    }
+
+    /**
+     * 绑定语言
+     * @param context
+     * @return
+     */
+    public static Context attachBaseContext(Context context) {
+        String spCountryCode = getSpCountryCode(context);
+        String spLanguageCode = getSpLanguageCode(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return updateResources(context, spLanguageCode, spCountryCode);
         } else {
             return context;
         }
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private static Context updateResources(Context context, String languageCode) {
+    private static Context updateResources(Context context, String languageCode, String countryCode) {
         Resources resources = context.getResources();
-        Locale locale = createLocale(languageCode);
+        Locale locale = createLocale(languageCode, countryCode);
 
         Configuration configuration = resources.getConfiguration();
         configuration.setLocale(locale);
@@ -209,6 +171,11 @@ public final class LanguageHelper {
         return context.createConfigurationContext(configuration);
     }
 
+    /**
+     * 获取系统的语言
+     * @return
+     */
+    @Deprecated
     public static String getSystemLanguage() {
         Locale locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -216,6 +183,14 @@ public final class LanguageHelper {
         } else locale = Locale.getDefault();
 
         return locale.getLanguage() + "-" + locale.getCountry();
+    }
+
+    public static Locale getSystemDefaultLanguage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return LocaleList.getDefault().get(0);
+        } else {
+            return Locale.getDefault();
+        }
     }
 
     public static boolean isChinaLanguage() {
