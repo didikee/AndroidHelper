@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.widget.Toast;
 
-import didikee.github.helper.helper.LanguageHelper;
 import didikee.github.helper.utils.ClipboardUtil;
 import didikee.github.helper.utils.NetworkStateUtil;
 
