@@ -28,7 +28,6 @@ public class PromotionUtils {
         sb.append("Android: ").append(Build.VERSION.RELEASE).append(breakLine);
         sb.append("Android version: ").append(Build.VERSION.SDK_INT).append(breakLine);
         sb.append("Brand: ").append(Build.BRAND).append("-").append(Build.MODEL).append(breakLine);
-        sb.append("Language: ").append(LanguageHelper.getSystemLanguage()).append(breakLine);
         sb.append("Network state: ").append(NetworkStateUtil.getNetworkType(context)).append(breakLine);
         return sb.toString();
     }
